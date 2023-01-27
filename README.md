@@ -1,4 +1,4 @@
-# <img src="https://raw.githack.com/FortAwesome/Font-Awesome/master/svgs/solid/comments.svg" card_color="#22A7F0" width="50" height="50" style="vertical-align:bottom"/> Wigpi
+# <img src="https://raw.githack.com/FortAwesome/Font-Awesome/master/svgs/solid/comments.svg" card_color="#0066cc" width="50" height="50" style="vertical-align:bottom"/> Wigpi
 Conversational bot
 
 ## About
