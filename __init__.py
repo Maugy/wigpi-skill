@@ -45,7 +45,9 @@ class Wigpi(FallbackSkill):
 
         Saves the state to disk once in a while.
         """
-        openai.api_key = os.environ.get(OPENAI_KEY)
+        key = os.environ.get(OPENAI_KEY)
+        print('key:', key)
+        openai.api_key = key
         completions = openai.Completion.create(
 						engine="text-davinci-002",
 						prompt=utterance,
