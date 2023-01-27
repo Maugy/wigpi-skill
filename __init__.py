@@ -20,6 +20,8 @@ from os.path import dirname, isfile
 from mycroft.api import DeviceApi
 from mycroft.skills.core import FallbackSkill, intent_handler
 from adapt.intent import IntentBuilder
+import dotenv
+
 
 
 class Wigpi(FallbackSkill):
@@ -45,9 +47,9 @@ class Wigpi(FallbackSkill):
 
         Saves the state to disk once in a while.
         """
-        key = os.environ.get(OPENAI_KEY)
-        print('key:', key)
-        openai.api_key = key
+        config = dotenv.dotenv_values("wigpi-skill/.env")
+        openai.api_key = config['OPENAI_API_KEY']
+        
         completions = openai.Completion.create(
 						engine="text-davinci-002",
 						prompt=utterance,

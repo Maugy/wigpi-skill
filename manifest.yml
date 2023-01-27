@@ -8,6 +8,7 @@ dependencies:
 #   # Pip dependencies on PyPI
   python:
     - openai
+    - python-dotenv
 #     - gensim
 #
 #   # Install packages with the system package manager
