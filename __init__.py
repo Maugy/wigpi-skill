@@ -47,7 +47,7 @@ class Wigpi(FallbackSkill):
 
         Saves the state to disk once in a while.
         """
-        config = dotenv.dotenv_values("wigpi-skill/.env")
+        config = dotenv.dotenv_values("~/mycroft-core/skills/wigpi-skill.maugy/.env")
         openai.api_key = config['OPENAI_API_KEY']
         
         completions = openai.Completion.create(
