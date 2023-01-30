@@ -18,11 +18,23 @@ from os import listdir, remove as remove_file
 from os.path import dirname, isfile
 
 from mycroft.api import DeviceApi
-from mycroft.skills.core import FallbackSkill, intent_handler
+from mycroft.skills.core import MycroftSkill, intent_handler
 from adapt.intent import IntentBuilder
 import dotenv
 
+config = dotenv.dotenv_values("/home/dmauger/mycroft-core/skills/wigpi-skill.maugy/.env")
+openai.api_key = config['OPENAI_API_KEY']
 
+def generate_response(prompt):
+    response = openai.Completion.create(
+        engine="text-davinci-002",
+        prompt = prompt,
+        max_tokens=1024,
+        n=1,
+        stop=None,
+        temperature=0.5,
+    ).choices[0].text 
+    return response 
 
 class Wigpi(FallbackSkill):
 
@@ -31,46 +43,36 @@ class Wigpi(FallbackSkill):
         
         # reloading skills will also reset this 'timer', so ideally it should
         # not be too high
-        self.line_count = 1
-        self.save_loop_threshold = int(self.settings.get('save_loop_threshold',
-                                                         4))
+        # self.line_count = 1
+        # self.save_loop_threshold = int(self.settings.get('save_loop_threshold',
+        #                                                  4))
 
 
-    def initialize(self):
-        self.register_fallback(self.handle_fallback, 50)
-        return
+    # def initialize(self):
+    #     self.register_fallback(self.handle_fallback, 50)
+    #     return
 
     
-
-    def ask_brain(self, utterance):
+    @intent_handler('wigpi.intent')
+    def ask_brain(self, message):
         """Send a query to the Wiggity brain.
 
         Saves the state to disk once in a while.
         """
-        config = dotenv.dotenv_values("/home/dmauger/mycroft-core/skills/wigpi-skill.maugy/.env")
-        openai.api_key = config['OPENAI_API_KEY']
+        prompt = message.data.get("prompt")
+        response = generate_response(prompt)
+        self.speak(response)
         
-        completions = openai.Completion.create(
-						engine="text-davinci-002",
-						prompt=utterance,
-						max_tokens=1024,
-						n=1,
-						stop=None,
-						temperature=0.5,
-					)
-        response = completions.choices[0].text
 
-        return response
-
-    def handle_fallback(self,message):
-        utterance = message.data.get("utterance")
+    # def handle_fallback(self,message):
+    #     utterance = message.data.get("utterance")
         
-        if 'wiggity' in utterance:
-            answer = self.ask_brain(utterance)
-            self.speak(answer)
-            return True
-        else:
-            return False
+    #     if 'wiggity' in utterance:
+    #         answer = self.ask_brain(utterance)
+    #         self.speak(answer)
+    #         return True
+    #     else:
+    #         return False
 
 def create_skill():
     return Wigpi()
