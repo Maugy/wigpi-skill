@@ -36,7 +36,7 @@ def generate_response(prompt):
     ).choices[0].text 
     return response 
 
-class Wigpi(FallbackSkill):
+class Wigpi(MycroftSkill):
 
     def __init__(self):
         super(Wigpi, self).__init__(name='Wigpi')
