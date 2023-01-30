@@ -53,7 +53,7 @@ class Wigpi(FallbackSkill):
     #     return
 
     
-    @intent_handler('wigpi.intent')
+    @intent_handler(IntentBuilder("").require("wigpi"))
     def ask_brain(self, message):
         """Send a query to the Wiggity brain.
 
