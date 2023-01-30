@@ -37,7 +37,7 @@ class Wigpi(FallbackSkill):
 
 
     def initialize(self):
-        self.register_fallback(self.handle_fallback, 20)
+        self.register_fallback(self.handle_fallback, 50)
         return
 
     
